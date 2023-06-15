@@ -130,6 +130,10 @@ const dataSource = [
     description: '脑图',
   },
   {
+    example: 'case/mindVirtual',
+    description: '脑图-大数据量-可视区域渲染',
+  },
+  {
     example: 'case/swimlane',
     description: '泳道图',
   },
@@ -182,6 +186,119 @@ const dataSource = [
   {
     example: 'history',
     description: '时光回溯',
+  },
+  // add
+  {
+    example: 'basic',
+    description: '基础的画布应用',
+  },
+  {
+    example: 'bus',
+    description: '总线',
+  },
+  {
+    example: 'connector/multi',
+    description: '多条连接器',
+  },
+  {
+    example: 'edge/custom-edge',
+    description: '自定义节点',
+  },
+  {
+    example: 'edge/jump-over',
+    description: '交叉的连接器跳跃',
+  },
+  {
+    example: 'edge/loop',
+    description: '环',
+  },
+  {
+    example: 'edge/router-orthogonal',
+    description: '正交路由',
+  },
+  {
+    example: 'edge/side-connection',
+    description: '跟边连接',
+  },
+  {
+    example: 'edge/sticky-point',
+    description: '点',
+  },
+  {
+    example: 'edge/tools',
+    description: '工具箱',
+  },
+  {
+    example: 'edge/tooltip',
+    description: '连接器提示',
+  },
+  {
+    example: 'edge/validate-connection-count',
+    description: '校验连接器个数',
+  },
+  {
+    example: 'edge/validate-connection',
+    description: '校验连接器',
+  },
+  {
+    example: 'embed/embedding',
+    description: '节点一起移动',
+  },
+  {
+    example: 'embed/nested',
+    description: '连接器嵌入画布',
+  },
+  {
+    example: 'hull',
+    description: '壳',
+  },
+  {
+    example: 'path/random',
+    description: '任意路径',
+  },
+  {
+    example: 'performance/conveyor',
+    description: '输送机',
+  },
+  {
+    example: 'performance/matrix',
+    description: '母体',
+  },
+  {
+    example: 'performance/shape',
+    description: '图形',
+  },
+  {
+    example: 'performance/shape-with-port',
+    description: '带点的图形',
+  },
+  {
+    example: 'shape/flowchart',
+    description: '形状集合',
+  },
+  {
+    example: 'table',
+    description: '表的字段关联',
+  },
+  {
+    example: 'tools/contextmenu',
+    description: '右键菜单项目',
+  },
+  {
+    example: 'tools/port-tooltip',
+    description: '点的提示',
+  },
+  {
+    example: 'tools/tooltip',
+    description: '常用工具',
+  },
+  {
+    example: 'v2',
+    description: 'v2',
+  },
+  {
+    example: 'v2/react',
+    description: 'v2',
   },
 ].map((item, index) => ({ key: index, ...item }))
 
