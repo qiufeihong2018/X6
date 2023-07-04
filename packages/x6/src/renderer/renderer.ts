@@ -9,18 +9,38 @@ import { Util } from '../util'
 export class Renderer extends Base {
   private readonly schedule: Scheduler = new Scheduler(this.graph)
 
+  /**
+   * 请求视图更新
+   * @param view
+   * @param flag
+   * @param options
+   */
   requestViewUpdate(view: CellView, flag: number, options: any = {}) {
     this.schedule.requestViewUpdate(view, flag, options)
   }
 
+  /**
+   * 视图是否在挂载中
+   * @param view
+   * @returns
+   */
   isViewMounted(view: CellView) {
     return this.schedule.isViewMounted(view)
   }
 
+  /**
+   * 设置渲染区域
+   * @param area
+   */
   setRenderArea(area?: Rectangle) {
     this.schedule.setRenderArea(area)
   }
 
+  /**
+   * 通过元素找到视图
+   * @param elem
+   * @returns
+   */
   findViewByElem(elem: string | Element | undefined | null) {
     if (elem == null) {
       return null
@@ -46,6 +66,10 @@ export class Renderer extends Base {
     return null
   }
 
+  /**
+   * 通过节点找到视图
+   * @param cellId
+   */
   findViewByCell(cellId: string | number): CellView | null
   findViewByCell(cell: Cell | null): CellView | null
   findViewByCell(
@@ -63,6 +87,11 @@ export class Renderer extends Base {
     return null
   }
 
+  /**
+   * 从点找到视图
+   * @param p
+   * @returns
+   */
   findViewsFromPoint(p: Point.PointLike) {
     const ref = { x: p.x, y: p.y }
     return this.model
@@ -78,6 +107,12 @@ export class Renderer extends Base {
       }) as CellView[]
   }
 
+  /**
+   * 从点找到边的视图
+   * @param p
+   * @param threshold
+   * @returns
+   */
   findEdgeViewsFromPoint(p: Point.PointLike, threshold = 5) {
     return this.model
       .getEdges()
@@ -93,6 +128,12 @@ export class Renderer extends Base {
       }) as EdgeView[]
   }
 
+  /**
+   * 找到在区域内的视图
+   * @param rect
+   * @param options
+   * @returns
+   */
   findViewsInArea(
     rect: Rectangle.RectangleLike,
     options: { strict?: boolean; nodeOnly?: boolean } = {},

@@ -3,6 +3,10 @@ import { Table } from 'antd'
 import './index.less'
 
 const dataSource = [
+  {
+    example: 'case/mindVirtual',
+    description: '脑图-大数据量-可视区域渲染',
+  },
   // graph
   {
     example: 'graph',
@@ -128,10 +132,6 @@ const dataSource = [
   {
     example: 'case/mind',
     description: '脑图',
-  },
-  {
-    example: 'case/mindVirtual',
-    description: '脑图-大数据量-可视区域渲染',
   },
   {
     example: 'case/swimlane',

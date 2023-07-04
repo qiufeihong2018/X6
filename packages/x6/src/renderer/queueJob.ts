@@ -2,10 +2,20 @@ export class JobQueue {
   private isFlushing = false
   private isFlushPending = false
   private scheduleId = 0
+  // 队列
   private queue: Job[] = []
+  // 框架间隔时间
   private frameInterval = 33
+  // 初始时刻
   private initialTime = Date.now()
 
+  /**
+   * 任务队列逻辑：
+   * 判断任务的优先级，优先级高的，任务立刻执行
+   * 优先级不高的，任务提前到队列开头，优先执行
+   * 先进先出，后进后出
+   * @param job
+   */
   queueJob(job: Job) {
     if (job.priority & JOB_PRIORITY.PRIOR) {
       job.cb()
@@ -17,6 +27,10 @@ export class JobQueue {
     }
   }
 
+  /**
+   * 异步执行任务
+   * 进行任务调度，在浏览器空闲的时候调用函数
+   */
   queueFlush() {
     if (!this.isFlushing && !this.isFlushPending) {
       this.isFlushPending = true
@@ -24,6 +38,9 @@ export class JobQueue {
     }
   }
 
+  /**
+   * 同步执行任务
+   */
   queueFlushSync() {
     if (!this.isFlushing && !this.isFlushPending) {
       this.isFlushPending = true
@@ -31,6 +48,9 @@ export class JobQueue {
     }
   }
 
+  /**
+   * 清除任务
+   */
   clearJobs() {
     this.queue.length = 0
     this.isFlushing = false
@@ -38,6 +58,9 @@ export class JobQueue {
     this.cancelScheduleJob()
   }
 
+  /**
+   * 执行任务
+   */
   flushJobs() {
     this.isFlushPending = false
     this.isFlushing = true
@@ -59,6 +82,10 @@ export class JobQueue {
     }
   }
 
+  /**
+   * 同步执行任务
+   * 执行队列中的第一个任务
+   */
   flushJobsSync() {
     this.isFlushPending = false
     this.isFlushing = true
@@ -76,6 +103,12 @@ export class JobQueue {
     this.isFlushing = false
   }
 
+  /**
+   * 二分查找
+   * 通过二分查找的方式来找到任务插入的位置，从而保证任务的优先级顺序。
+   * @param job
+   * @returns
+   */
   private findInsertionIndex(job: Job) {
     let left = 0
     let ins = this.queue.length
@@ -93,6 +126,12 @@ export class JobQueue {
     return ins
   }
 
+  /**
+   * 任务调度
+   * window.requestIdleCallback() 方法插入一个函数，这个函数将在浏览器空闲时期被调用。
+   * 空闲时间，执行任务，在主事件循环上执行后台和低优先级工作，而不影响延迟关键事件，如动画和输入响应。
+   * 函数一般会按照先进先调用的顺序执行，然后100ms内没有执行函数，会在超时前执行一次。
+   */
   private scheduleJob() {
     if ('requestIdleCallback' in window) {
       if (this.scheduleId) {
@@ -109,6 +148,9 @@ export class JobQueue {
     }
   }
 
+  /**
+   * 结束回调
+   */
   private cancelScheduleJob() {
     if ('cancelIdleCallback' in window) {
       if (this.scheduleId) {
@@ -123,6 +165,10 @@ export class JobQueue {
     }
   }
 
+  /**
+   * 获取当前时间
+   * @returns
+   */
   private getCurrentTime() {
     const hasPerformanceNow =
       typeof performance === 'object' && typeof performance.now === 'function'
@@ -140,9 +186,13 @@ export interface Job {
 }
 
 export enum JOB_PRIORITY {
+  // 渲染边
   RenderEdge = /**/ 1 << 1,
+  // 渲染节点
   RenderNode = /**/ 1 << 2,
+  // 更新
   Update = /*    */ 1 << 3,
+  // 更重要的
   PRIOR = /*     */ 1 << 20,
 }
 
