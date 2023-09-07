@@ -20,10 +20,22 @@ import { HighlightManager as Highlight } from './highlight'
 import { SizeManager as Size } from './size'
 
 export class Graph extends Basecoat<EventArgs> {
+  /**
+   * installedPlugins属性是一个已安装的插件集合。
+   */
   private installedPlugins: Set<Graph.Plugin> = new Set()
+  /**
+   * 表示图形对象的数据模型。
+   */
   public model: Model
 
+  /**
+   * 表示图形对象的选项。
+   */
   public readonly options: GraphOptions.Definition
+  /**
+   * css、view、grid、defs、coord、renderer等属性分别表示图形对象的样式、视图、网格、定义、坐标系、渲染器等管理器。
+   */
   public readonly css: Css
   public readonly view: GraphView
   public readonly grid: Grid
@@ -42,10 +54,17 @@ export class Graph extends Basecoat<EventArgs> {
     return this.options.container
   }
 
+  /**
+   * 返回图形对象的标签。
+   */
   protected get [Symbol.toStringTag]() {
     return Graph.toStringTag
   }
 
+  /**
+   * constructor构造函数接受一个options参数，用于初始化图形对象及其相关的管理器。
+   * @param options
+   */
   constructor(options: Partial<GraphOptions.Manual>) {
     super()
     this.options = GraphOptions.get(options)
@@ -74,47 +93,99 @@ export class Graph extends Basecoat<EventArgs> {
 
   // #region model
 
+  /**
+   * isNode方法判断一个单元是否为节点。
+   * @param cell
+   * @returns
+   */
   isNode(cell: Cell): cell is Node {
     return cell.isNode()
   }
-
+  /**
+   * isNode方法判断一个单元是否为边
+   * @param cell
+   * @returns
+   */
   isEdge(cell: Cell): cell is Edge {
     return cell.isEdge()
   }
-
+  /**
+   * resetCells方法重置图形对象的所有单元。
+   * @param cells
+   * @param options
+   * @returns
+   */
   resetCells(cells: Cell[], options: Collection.SetOptions = {}) {
     this.model.resetCells(cells, options)
     return this
   }
 
+  /**
+   * clearCells方法清空图形对象的所有单元。
+   * @param options
+   * @returns
+   */
   clearCells(options: Cell.SetOptions = {}) {
     this.model.clear(options)
     return this
   }
 
+  /**
+   * toJSON方法将图形对象的数据模型转换为JSON格式。
+
+   * @param options 
+   * @returns 
+   */
   toJSON(options: Model.ToJSONOptions = {}) {
     return this.model.toJSON(options)
   }
 
+  /**
+   * parseJSON方法解析JSON数据并更新图形对象的数据模型。
+   * @param data
+   * @returns
+   */
   parseJSON(data: Model.FromJSONData) {
     return this.model.parseJSON(data)
   }
 
+  /**
+   * fromJSON方法从JSON数据中创建图形对象。
+   * @param data
+   * @param options
+   * @returns
+   */
   fromJSON(data: Model.FromJSONData, options: Model.FromJSONOptions = {}) {
     this.model.fromJSON(data, options)
     return this
   }
 
+  /**
+   * getCellById方法根据ID获取图形对象中的单元。
+   * @param id
+   * @returns
+   */
   getCellById(id: string) {
     return this.model.getCell(id)
   }
 
+  /**
+   * 添加一个节点到图形对象中。
+   * @param metadata
+   * @param options
+   */
   addNode(metadata: Node.Metadata, options?: Model.AddOptions): Node
   addNode(node: Node, options?: Model.AddOptions): Node
   addNode(node: Node | Node.Metadata, options: Model.AddOptions = {}): Node {
     return this.model.addNode(node, options)
   }
 
+  /**
+   * 添加多条边到图形对象中。
+   * @param nodes
+   * @param options
+   * @returns
+   */
   addNodes(nodes: (Node | Node.Metadata)[], options: Model.AddOptions = {}) {
     return this.addCell(
       nodes.map((node) => (Node.isNode(node) ? node : this.createNode(node))),
@@ -145,6 +216,11 @@ export class Graph extends Basecoat<EventArgs> {
     )
   }
 
+  /**
+   * 移除图形对象中的一条边。
+   * @param edgeId
+   * @param options
+   */
   removeEdge(edgeId: string, options?: Collection.RemoveOptions): Edge | null
   removeEdge(edge: Edge, options?: Collection.RemoveOptions): Edge | null
   removeEdge(edge: Edge | string, options: Collection.RemoveOptions = {}) {
@@ -174,27 +250,46 @@ export class Graph extends Basecoat<EventArgs> {
     return this.model.removeConnectedEdges(cell, options)
   }
 
+  /**
+   * disconnectConnectedEdges方法断开与指定单元相连的边。
+   * @param cell
+   * @param options
+   * @returns
+   */
   disconnectConnectedEdges(cell: Cell | string, options: Edge.SetOptions = {}) {
     this.model.disconnectConnectedEdges(cell, options)
     return this
   }
 
+  /**
+   * hasCell方法判断图形对象中是否包含指定的单元。
+   * @param cellId
+   */
   hasCell(cellId: string): boolean
   hasCell(cell: Cell): boolean
   hasCell(cell: string | Cell): boolean {
     return this.model.has(cell as Cell)
   }
 
+  /**
+   * getCells方法获取图形对象中的所有单元。
+   * @returns
+   */
   getCells() {
     return this.model.getCells()
   }
 
+  /**
+   * getCellCount方法获取图形对象中的单元数量。
+   * @returns
+   */
   getCellCount() {
     return this.model.total()
   }
 
   /**
    * Returns all the nodes in the graph.
+   * getNodes()方法返回图形中的所有节点。
    */
   getNodes() {
     return this.model.getNodes()
@@ -202,6 +297,7 @@ export class Graph extends Basecoat<EventArgs> {
 
   /**
    * Returns all the edges in the graph.
+   * getEdges()方法返回图形中的所有边。
    */
   getEdges() {
     return this.model.getEdges()
@@ -209,6 +305,7 @@ export class Graph extends Basecoat<EventArgs> {
 
   /**
    * Returns all outgoing edges for the node.
+   * getOutgoingEdges(cell: Cell | string)方法返回指定节点的所有出边。
    */
   getOutgoingEdges(cell: Cell | string) {
     return this.model.getOutgoingEdges(cell)
@@ -216,6 +313,7 @@ export class Graph extends Basecoat<EventArgs> {
 
   /**
    * Returns all incoming edges for the node.
+   * getIncomingEdges(cell: Cell | string)方法返回指定节点的所有入边。
    */
   getIncomingEdges(cell: Cell | string) {
     return this.model.getIncomingEdges(cell)
@@ -223,6 +321,7 @@ export class Graph extends Basecoat<EventArgs> {
 
   /**
    * Returns edges connected with cell.
+   * getConnectedEdges(cell: Cell | string, options: Model.GetConnectedEdgesOptions = {})方法返回与指定节点连接的所有边。参数options是一个可选对象，用于指定获取连接边的选项。
    */
   getConnectedEdges(
     cell: Cell | string,
@@ -233,6 +332,7 @@ export class Graph extends Basecoat<EventArgs> {
 
   /**
    * Returns an array of all the roots of the graph.
+   * getRootNodes()方法返回图形中所有根节点的数组。
    */
   getRootNodes() {
     return this.model.getRoots()
@@ -240,6 +340,7 @@ export class Graph extends Basecoat<EventArgs> {
 
   /**
    * Returns an array of all the leafs of the graph.
+   * getLeafNodes()方法返回图形中所有叶节点的数组。
    */
   getLeafNodes() {
     return this.model.getLeafs()
@@ -248,6 +349,7 @@ export class Graph extends Basecoat<EventArgs> {
   /**
    * Returns `true` if the node is a root node, i.e.
    * there is no  edges coming to the node.
+   * isRootNode(cell: Cell | string)方法判断指定的节点是否为根节点，即该节点没有入边。如果是根节点，则返回true。
    */
   isRootNode(cell: Cell | string) {
     return this.model.isRoot(cell)
@@ -256,6 +358,7 @@ export class Graph extends Basecoat<EventArgs> {
   /**
    * Returns `true` if the node is a leaf node, i.e.
    * there is no edges going out from the node.
+   * isLeafNode(cell: Cell | string)方法判断指定的节点是否为叶节点，即该节点没有出边。如果是叶节点，则返回true。
    */
   isLeafNode(cell: Cell | string) {
     return this.model.isLeaf(cell)
@@ -264,6 +367,7 @@ export class Graph extends Basecoat<EventArgs> {
   /**
    * Returns all the neighbors of node in the graph. Neighbors are all
    * the nodes connected to node via either incoming or outgoing edge.
+   * getNeighbors(cell: Cell, options: Model.GetNeighborsOptions = {})方法返回指定节点在图形中的所有邻居节点。邻居节点是通过入边或出边与指定节点相连的节点。
    */
   getNeighbors(cell: Cell, options: Model.GetNeighborsOptions = {}) {
     return this.model.getNeighbors(cell, options)
@@ -271,6 +375,7 @@ export class Graph extends Basecoat<EventArgs> {
 
   /**
    * Returns `true` if `cell2` is a neighbor of `cell1`.
+   * isNeighbor(cell1: Cell, cell2: Cell, options: Model.GetNeighborsOptions = {})方法判断cell2是否是cell1的邻居节点。如果是邻居节点，则返回true。
    */
   isNeighbor(
     cell1: Cell,
@@ -280,12 +385,16 @@ export class Graph extends Basecoat<EventArgs> {
     return this.model.isNeighbor(cell1, cell2, options)
   }
 
+  /**
+   * getSuccessors(cell: Cell, options: Model.GetPredecessorsOptions = {})方法返回指定节点在图形中的所有后继节点。后继节点是通过出边与指定节点相连的节点。
+   */
   getSuccessors(cell: Cell, options: Model.GetPredecessorsOptions = {}) {
     return this.model.getSuccessors(cell, options)
   }
 
   /**
    * Returns `true` if `cell2` is a successor of `cell1`.
+   * isSuccessor(cell1: Cell, cell2: Cell, options: Model.GetPredecessorsOptions = {})方法判断cell2是否是cell1的后继节点。如果是后继节点，则返回true。
    */
   isSuccessor(
     cell1: Cell,
@@ -295,12 +404,16 @@ export class Graph extends Basecoat<EventArgs> {
     return this.model.isSuccessor(cell1, cell2, options)
   }
 
+  /**
+   * getPredecessors(cell: Cell, options: Model.GetPredecessorsOptions = {})方法返回指定节点在图形中的所有前驱节点。前驱节点是通过入边与指定节点相连的节点。
+   */
   getPredecessors(cell: Cell, options: Model.GetPredecessorsOptions = {}) {
     return this.model.getPredecessors(cell, options)
   }
 
   /**
    * Returns `true` if `cell2` is a predecessor of `cell1`.
+   * isPredecessor(cell1: Cell, cell2: Cell, options: Model.GetPredecessorsOptions = {})方法判断cell2是否是cell1的前驱节点。如果是前驱节点，则返回true。
    */
   isPredecessor(
     cell1: Cell,
@@ -310,6 +423,9 @@ export class Graph extends Basecoat<EventArgs> {
     return this.model.isPredecessor(cell1, cell2, options)
   }
 
+  /**
+   * getCommonAncestor(...cells: (Cell | null | undefined)[])方法返回指定节点的最近共同祖先节点。
+   */
   getCommonAncestor(...cells: (Cell | null | undefined)[]) {
     return this.model.getCommonAncestor(...cells)
   }
@@ -321,6 +437,10 @@ export class Graph extends Basecoat<EventArgs> {
    * source/target nodes; if it is an node, it collects its incoming and
    * outgoing edges if both the edge terminal (source/target) are in the
    * cells array.
+   * getSubGraph(cells: Cell[], options: Model.GetSubgraphOptions = {})
+   * 方法返回与传入的cells数组中的任何一个节点或边连接的所有节点和边的数组。
+   * 该方法遍历cells数组，如果当前元素是边，则收集其源节点和目标节点；如果当前元素是节点，
+   * 并且该节点的入边和出边的端点都在cells数组中，则收集该节点的入边和出边。
    */
   getSubGraph(cells: Cell[], options: Model.GetSubgraphOptions = {}) {
     return this.model.getSubGraph(cells, options)
@@ -332,11 +452,18 @@ export class Graph extends Basecoat<EventArgs> {
    * take into account all the embedded cells of all the subgraph cells.
    *
    * Returns a map of the form: { [original cell ID]: [clone] }.
+   *
+   * cloneSubGraph(cells: Cell[], options: Model.GetSubgraphOptions = {})
+   * 方法克隆整个子图（包括所有连接到子图中的源节点/目标节点的链接）。
+   * 如果options.deep为true，还会考虑所有子图节点的嵌套单元格。
    */
   cloneSubGraph(cells: Cell[], options: Model.GetSubgraphOptions = {}) {
     return this.model.cloneSubGraph(cells, options)
   }
 
+  /**
+   * cloneCells(cells: Cell[])方法克隆给定的单元格数组，并返回克隆的单元格数组。
+   */
   cloneCells(cells: Cell[]) {
     return this.model.cloneCells(cells)
   }
@@ -344,6 +471,7 @@ export class Graph extends Basecoat<EventArgs> {
   /**
    * Returns an array of nodes whose bounding box contains point.
    * Note that there can be more then one node as nodes might overlap.
+   * 方法返回边界框包含指定点的所有节点的数组。注意可能会有多个节点，因为节点可能重叠。
    */
   getNodesFromPoint(x: number, y: number): Node[]
   getNodesFromPoint(p: Point.PointLike): Node[]
@@ -354,6 +482,7 @@ export class Graph extends Basecoat<EventArgs> {
   /**
    * Returns an array of nodes whose bounding box top/left coordinate
    * falls into the rectangle.
+   * 返回边界框的上/左坐标位于指定矩形内的所有节点的数组。
    */
   getNodesInArea(
     x: number,
@@ -382,6 +511,10 @@ export class Graph extends Basecoat<EventArgs> {
     )
   }
 
+  /**
+   * 返回位于指定节点下方的所有节点的数组。
+   * 可以通过options.by属性指定搜索方式，是通过边界框还是关键点进行搜索。
+   */
   getNodesUnderNode(
     node: Node,
     options: {
@@ -391,6 +524,10 @@ export class Graph extends Basecoat<EventArgs> {
     return this.model.getNodesUnderNode(node, options)
   }
 
+  /**
+   * 通过迭代器函数在图形中搜索指定单元格的所有匹配节点。
+   * 可以通过options参数设置搜索选项。该方法会返回当前类的实例，方便链式调用。
+   */
   searchCell(
     cell: Cell,
     iterator: Model.SearchIterator,
@@ -403,6 +540,7 @@ export class Graph extends Basecoat<EventArgs> {
   /** *
    * Returns an array of IDs of nodes on the shortest
    * path between source and target.
+   * 返回源节点和目标节点之间的最短路径上的所有节点的ID数组。
    */
   getShortestPath(
     source: Cell | string,
@@ -414,6 +552,7 @@ export class Graph extends Basecoat<EventArgs> {
 
   /**
    * Returns the bounding box that surrounds all cells in the graph.
+   * 返回包围图形中所有单元格的边界框。
    */
   getAllCellsBBox() {
     return this.model.getAllCellsBBox()
@@ -421,19 +560,30 @@ export class Graph extends Basecoat<EventArgs> {
 
   /**
    * Returns the bounding box that surrounds all the given cells.
+   * 返回包围给定单元格的边界框。
    */
   getCellsBBox(cells: Cell[], options: Cell.GetCellsBBoxOptions = {}) {
     return this.model.getCellsBBox(cells, options)
   }
 
+  /**
+   * 开始一个批处理操作，可以指定批处理操作的名称和附加数据。
+   */
   startBatch(name: string | Model.BatchName, data: KeyValue = {}) {
     this.model.startBatch(name as Model.BatchName, data)
   }
 
+  /**
+   * 结束一个批处理操作，可以指定批处理操作的名称和附加数据。
+   */
   stopBatch(name: string | Model.BatchName, data: KeyValue = {}) {
     this.model.stopBatch(name as Model.BatchName, data)
   }
 
+  /**
+   * 用于执行一批操作，并在操作开始和结束时自动调用startBatch和stopBatch方法。
+   * 可以传入操作执行的函数和附加数据。
+   */
   batchUpdate<T>(execute: () => T, data?: KeyValue): T
   batchUpdate<T>(
     name: string | Model.BatchName,
@@ -454,6 +604,9 @@ export class Graph extends Basecoat<EventArgs> {
     return result
   }
 
+  /**
+   * 更新给定单元的ID。
+   */
   updateCellId(cell: Cell, newId: string) {
     return this.model.updateCellId(cell, newId)
   }
@@ -461,7 +614,11 @@ export class Graph extends Basecoat<EventArgs> {
   // #endregion
 
   // #region view
-
+  /**
+   * 根据提供的单元格或元素引用查找对应的视图。
+   * 如果提供的是单元格引用，则调用findViewByCell方法；如果提供的是元素引用，
+   * 则调用findViewByElem方法。
+   */
   findView(ref: Cell | Element) {
     if (Cell.isCell(ref)) {
       return this.findViewByCell(ref)
@@ -470,6 +627,11 @@ export class Graph extends Basecoat<EventArgs> {
     return this.findViewByElem(ref)
   }
 
+  /**
+   * 根据提供的点或矩形引用查找对应的视图数组。
+   * 如果提供的是矩形引用，则调用findViewsInArea方法；
+   * 如果提供的是点引用，则调用findViewsFromPoint方法。
+   */
   findViews(ref: Point.PointLike | Rectangle.RectangleLike) {
     if (Rectangle.isRectangleLike(ref)) {
       return this.findViewsInArea(ref)
@@ -482,6 +644,10 @@ export class Graph extends Basecoat<EventArgs> {
     return []
   }
 
+  /**
+   * 根据单元格的ID或单元格对象查找对应的视图。
+   * @param cellId
+   */
   findViewByCell(cellId: string | number): CellView | null
   findViewByCell(cell: Cell | null): CellView | null
   findViewByCell(
@@ -490,10 +656,20 @@ export class Graph extends Basecoat<EventArgs> {
     return this.renderer.findViewByCell(cell as Cell)
   }
 
+  /**
+   * 根据元素的ID或元素对象查找对应的视图。
+   * @param elem
+   * @returns
+   */
   findViewByElem(elem: string | Element | undefined | null) {
     return this.renderer.findViewByElem(elem)
   }
 
+  /**
+   * 根据给定的坐标点或点引用查找包含该点的所有视图。
+   * @param x
+   * @param y
+   */
   findViewsFromPoint(x: number, y: number): CellView[]
   findViewsFromPoint(p: Point.PointLike): CellView[]
   findViewsFromPoint(x: number | Point.PointLike, y?: number) {
@@ -501,6 +677,15 @@ export class Graph extends Basecoat<EventArgs> {
     return this.renderer.findViewsFromPoint(p)
   }
 
+  /**
+   * 根据给定的矩形范围或矩形引用查找包含在该范围内的所有视图。
+   * 这些方法用于在视图中查找元素或区域对应的视图。
+   * @param x
+   * @param y
+   * @param width
+   * @param height
+   * @param options
+   */
   findViewsInArea(
     x: number,
     y: number,
@@ -541,10 +726,12 @@ export class Graph extends Basecoat<EventArgs> {
 
   /**
    * Returns the current transformation matrix of the graph.
+   * 返回当前图形的变换矩阵。
    */
   matrix(): DOMMatrix
   /**
    * Sets new transformation with the given `matrix`
+   * 设置图形的变换矩阵。
    */
   matrix(mat: DOMMatrix | Dom.MatrixLike | null): this
   matrix(mat?: DOMMatrix | Dom.MatrixLike | null) {
@@ -555,6 +742,13 @@ export class Graph extends Basecoat<EventArgs> {
     return this
   }
 
+  /**
+   * 调整图形的大小。如果安装了滚动插件（scroller），则调用插件的resize方法；
+   * 否则调用transform的resize方法。
+   * @param width
+   * @param height
+   * @returns
+   */
   resize(width?: number, height?: number) {
     const scroller = this.getPlugin<any>('scroller')
     if (scroller) {
@@ -565,6 +759,9 @@ export class Graph extends Basecoat<EventArgs> {
     return this
   }
 
+  /**
+   * 返回当前图形的缩放比例。
+   */
   scale(): Dom.Scale
   scale(sx: number, sy?: number, cx?: number, cy?: number): this
   scale(sx?: number, sy: number = sx as number, cx = 0, cy = 0) {
@@ -575,8 +772,17 @@ export class Graph extends Basecoat<EventArgs> {
     return this
   }
 
+  /**
+   * 返回当前图形的缩放级别。
+   */
   zoom(): number
   zoom(factor: number, options?: Transform.ZoomOptions): this
+  /**
+   * 设置图形的缩放级别。
+   * @param factor
+   * @param options
+   * @returns
+   */
   zoom(factor?: number, options?: Transform.ZoomOptions) {
     const scroller = this.getPlugin<any>('scroller')
     if (scroller) {
@@ -594,6 +800,14 @@ export class Graph extends Basecoat<EventArgs> {
     return this
   }
 
+  /**
+   * 将图形缩放到指定的缩放级别。
+   * 如果安装了滚动插件（scroller），则调用插件的zoom方法并将absolute选项设置为true；
+   * 否则调用transform的zoom方法并将absolute选项设置为true。
+   * @param factor
+   * @param options
+   * @returns
+   */
   zoomTo(
     factor: number,
     options: Omit<Transform.ZoomOptions, 'absolute'> = {},
@@ -608,6 +822,14 @@ export class Graph extends Basecoat<EventArgs> {
     return this
   }
 
+  /**
+   * 将图形缩放以适应指定的矩形区域。
+   * 如果安装了滚动插件（scroller），则调用插件的zoomToRect方法；
+   * 否则调用transform的zoomToRect方法。
+   * @param rect
+   * @param options
+   * @returns
+   */
   zoomToRect(
     rect: Rectangle.RectangleLike,
     options: Transform.ScaleContentToFitOptions &
@@ -623,6 +845,11 @@ export class Graph extends Basecoat<EventArgs> {
     return this
   }
 
+  /**
+   * 将图形缩放以适应内容区域。如果安装了滚动插件（scroller），则调用插件的zoomToFit方法；否则调用transform的zoomToFit方法。
+   * @param options
+   * @returns
+   */
   zoomToFit(
     options: Transform.GetContentAreaOptions &
       Transform.ScaleContentToFitOptions = {},
@@ -637,8 +864,18 @@ export class Graph extends Basecoat<EventArgs> {
     return this
   }
 
+  /**
+   * 返回当前图形的旋转角度。
+   */
   rotate(): Dom.Rotation
   rotate(angle: number, cx?: number, cy?: number): this
+  /**
+   * 设置图形的旋转角度。
+   * @param angle
+   * @param cx
+   * @param cy
+   * @returns
+   */
   rotate(angle?: number, cx?: number, cy?: number) {
     if (typeof angle === 'undefined') {
       return this.transform.getRotation()
@@ -648,8 +885,17 @@ export class Graph extends Basecoat<EventArgs> {
     return this
   }
 
+  /**
+   * 返回当前图形的平移距离。
+   */
   translate(): Dom.Translation
   translate(tx: number, ty: number): this
+  /**
+   * 设置图形的平移距离。
+   * @param tx
+   * @param ty
+   * @returns
+   */
   translate(tx?: number, ty?: number) {
     if (typeof tx === 'undefined') {
       return this.transform.getTranslation()
@@ -659,6 +905,12 @@ export class Graph extends Basecoat<EventArgs> {
     return this
   }
 
+  /**
+   * 按给定的增量平移图形。
+   * @param dx
+   * @param dy
+   * @returns
+   */
   translateBy(dx: number, dy: number): this {
     const ts = this.translate()
     const tx = ts.tx + dx
@@ -666,18 +918,39 @@ export class Graph extends Basecoat<EventArgs> {
     return this.translate(tx, ty)
   }
 
+  /**
+   * 返回图形的图形区域。
+   * @returns
+   */
   getGraphArea() {
     return this.transform.getGraphArea()
   }
 
+  /**
+   * 返回图形的内容区域。
+   * @param options
+   * @returns
+   */
   getContentArea(options: Transform.GetContentAreaOptions = {}) {
     return this.transform.getContentArea(options)
   }
 
+  /**
+   * 返回图形的内容范围的边界框。
+   * @param options
+   * @returns
+   */
   getContentBBox(options: Transform.GetContentAreaOptions = {}) {
     return this.transform.getContentBBox(options)
   }
 
+  /**
+   * 将图形调整为适应内容的大小。
+   * @param gridWidth
+   * @param gridHeight
+   * @param padding
+   * @param options
+   */
   fitToContent(
     gridWidth?: number,
     gridHeight?: number,
@@ -694,6 +967,11 @@ export class Graph extends Basecoat<EventArgs> {
     return this.transform.fitToContent(gridWidth, gridHeight, padding, options)
   }
 
+  /**
+   * 将图形的内容缩放以适应视图区域。
+   * @param options
+   * @returns
+   */
   scaleContentToFit(options: Transform.ScaleContentToFitOptions = {}) {
     this.transform.scaleContentToFit(options)
     return this
@@ -701,6 +979,7 @@ export class Graph extends Basecoat<EventArgs> {
 
   /**
    * Position the center of graph to the center of the viewport.
+   * 将图形的中心位置调整到视图的中心。
    */
   center(options?: Transform.CenterOptions) {
     return this.centerPoint(options)
@@ -711,6 +990,7 @@ export class Graph extends Basecoat<EventArgs> {
    * center of the viewport. If only one of the coordinates is specified,
    * only center along the specified dimension and keep the other coordinate
    * unchanged.
+   * 将图形上的点（以本地坐标表示）定位到视图区域的中心。如果只指定其中一个坐标，只会在指定的维度上居中，保持另一个坐标不变。
    */
   centerPoint(
     x: number,
@@ -723,6 +1003,13 @@ export class Graph extends Basecoat<EventArgs> {
     options?: Transform.CenterOptions,
   ): this
   centerPoint(optons?: Transform.CenterOptions): this
+  /**
+   * 将图形上的点（以本地坐标表示）定位到视图区域的中心。
+   * @param x
+   * @param y
+   * @param options
+   * @returns
+   */
   centerPoint(
     x?: number | null | Transform.CenterOptions,
     y?: number | null,
@@ -738,6 +1025,11 @@ export class Graph extends Basecoat<EventArgs> {
     return this
   }
 
+  /**
+   * 将图形的内容区域定位到视图区域的中心。
+   * @param options
+   * @returns
+   */
   centerContent(options?: Transform.PositionContentOptions) {
     const scroller = this.getPlugin<any>('scroller')
     if (scroller) {
@@ -749,6 +1041,12 @@ export class Graph extends Basecoat<EventArgs> {
     return this
   }
 
+  /**
+   * 将指定的单元格定位到视图区域的中心。
+   * @param cell
+   * @param options
+   * @returns
+   */
   centerCell(cell: Cell, options?: Transform.PositionContentOptions) {
     const scroller = this.getPlugin<any>('scroller')
     if (scroller) {
@@ -760,6 +1058,14 @@ export class Graph extends Basecoat<EventArgs> {
     return this
   }
 
+  /**
+   * 将指定的点定位到视图区域的指定位置。
+   * @param point
+   * @param x
+   * @param y
+   * @param options
+   * @returns
+   */
   positionPoint(
     point: Point.PointLike,
     x: number | string,
@@ -776,6 +1082,13 @@ export class Graph extends Basecoat<EventArgs> {
     return this
   }
 
+  /**
+   * 将指定的矩形区域定位到视图区域的指定位置。
+   * @param rect
+   * @param direction
+   * @param options
+   * @returns
+   */
   positionRect(
     rect: Rectangle.RectangleLike,
     direction: Transform.Direction,
@@ -791,6 +1104,13 @@ export class Graph extends Basecoat<EventArgs> {
     return this
   }
 
+  /**
+   * 将指定的单元格定位到视图区域的指定位置。
+   * @param cell
+   * @param direction
+   * @param options
+   * @returns
+   */
   positionCell(
     cell: Cell,
     direction: Transform.Direction,
@@ -806,6 +1126,12 @@ export class Graph extends Basecoat<EventArgs> {
     return this
   }
 
+  /**
+   * 将图形的内容区域定位到视图区域的指定位置。
+   * @param pos
+   * @param options
+   * @returns
+   */
   positionContent(
     pos: Transform.Direction,
     options?: Transform.PositionContentOptions,
@@ -824,12 +1150,20 @@ export class Graph extends Basecoat<EventArgs> {
 
   // #region coord
 
+  /**
+   * 将给定的点或坐标对齐到网格上。
+   * @param p
+   */
   snapToGrid(p: Point.PointLike): Point
   snapToGrid(x: number, y: number): Point
   snapToGrid(x: number | Point.PointLike, y?: number) {
     return this.coord.snapToGrid(x, y)
   }
 
+  /**
+   * 将给定的点、矩形或坐标从页面坐标系转换为本地坐标系。
+   * @param rect
+   */
   pageToLocal(rect: Rectangle.RectangleLike): Rectangle
   pageToLocal(x: number, y: number, width: number, height: number): Rectangle
   pageToLocal(p: Point.PointLike): Point
@@ -856,6 +1190,10 @@ export class Graph extends Basecoat<EventArgs> {
     return this.coord.pageToLocalPoint(x, y)
   }
 
+  /**
+   * 将给定的点、矩形或坐标从本地坐标系转换为页面坐标系。
+   * @param rect
+   */
   localToPage(rect: Rectangle.RectangleLike): Rectangle
   localToPage(x: number, y: number, width: number, height: number): Rectangle
   localToPage(p: Point.PointLike): Point
@@ -882,6 +1220,10 @@ export class Graph extends Basecoat<EventArgs> {
     return this.coord.localToPagePoint(x, y)
   }
 
+  /**
+   * 将给定的点、矩形或坐标从客户端坐标系转换为本地坐标系。
+   * @param rect
+   */
   clientToLocal(rect: Rectangle.RectangleLike): Rectangle
   clientToLocal(x: number, y: number, width: number, height: number): Rectangle
   clientToLocal(p: Point.PointLike): Point
@@ -908,6 +1250,10 @@ export class Graph extends Basecoat<EventArgs> {
     return this.coord.clientToLocalPoint(x, y)
   }
 
+  /**
+   * 将给定的点、矩形或坐标从本地坐标系转换为客户端坐标系。
+   * @param rect
+   */
   localToClient(rect: Rectangle.RectangleLike): Rectangle
   localToClient(x: number, y: number, width: number, height: number): Rectangle
   localToClient(p: Point.PointLike): Point
@@ -937,6 +1283,7 @@ export class Graph extends Basecoat<EventArgs> {
   /**
    * Transform the rectangle `rect` defined in the local coordinate system to
    * the graph coordinate system.
+   * 将给定的点、矩形或坐标从本地坐标系转换为图形坐标系。
    */
   localToGraph(rect: Rectangle.RectangleLike): Rectangle
   /**
@@ -976,6 +1323,10 @@ export class Graph extends Basecoat<EventArgs> {
     return this.coord.localToGraphPoint(x, y)
   }
 
+  /**
+   * 将给定的点、矩形或坐标从图形坐标系转换为本地坐标系。
+   * @param rect
+   */
   graphToLocal(rect: Rectangle.RectangleLike): Rectangle
   graphToLocal(x: number, y: number, width: number, height: number): Rectangle
   graphToLocal(p: Point.PointLike): Point
@@ -1001,6 +1352,10 @@ export class Graph extends Basecoat<EventArgs> {
     return this.coord.graphToLocalPoint(x, y)
   }
 
+  /**
+   * 将给定的点、矩形或坐标从客户端坐标系转换为图形坐标系。
+   * @param rect
+   */
   clientToGraph(rect: Rectangle.RectangleLike): Rectangle
   clientToGraph(x: number, y: number, width: number, height: number): Rectangle
   clientToGraph(p: Point.PointLike): Point
@@ -1028,15 +1383,29 @@ export class Graph extends Basecoat<EventArgs> {
   // #endregion
 
   // #region defs
-
+  /**
+   * 定义过滤，并返回过滤后的对象。
+   * @param options
+   * @returns
+   */
   defineFilter(options: Defs.FilterOptions) {
     return this.defs.filter(options)
   }
 
+  /**
+   * 用于定义渐变，并返回渐变对象。
+   * @param options
+   * @returns
+   */
   defineGradient(options: Defs.GradientOptions) {
     return this.defs.gradient(options)
   }
 
+  /**
+   * 定义标记，并返回标记对象。
+   * @param options
+   * @returns
+   */
   defineMarker(options: Defs.MarkerOptions) {
     return this.defs.marker(options)
   }
@@ -1045,30 +1414,54 @@ export class Graph extends Basecoat<EventArgs> {
 
   // #region grid
 
+  /**
+   * 获取当前网格的大小。
+   */
   getGridSize() {
     return this.grid.getGridSize()
   }
-
+  /**
+   * 设置网格的大小，并返回当前图形对象。
+   * @param gridSize
+   * @returns
+   */
   setGridSize(gridSize: number) {
     this.grid.setGridSize(gridSize)
     return this
   }
 
+  /**
+   * 显示网格，并返回当前图形对象。
+   * @returns
+   */
   showGrid() {
     this.grid.show()
     return this
   }
 
+  /**
+   * 隐藏网格，并返回当前图形对象。
+   * @returns
+   */
   hideGrid() {
     this.grid.hide()
     return this
   }
 
+  /**
+   * 清除网格，并返回当前图形对象。
+   * @returns
+   */
   clearGrid() {
     this.grid.clear()
     return this
   }
 
+  /**
+   * 绘制网格，并返回当前图形对象。其中，options参数是一个可选的配置对象，用于设置网格的绘制样式。
+   * @param options
+   * @returns
+   */
   drawGrid(options?: Grid.DrawGridOptions) {
     this.grid.draw(options)
     return this
@@ -1078,11 +1471,21 @@ export class Graph extends Basecoat<EventArgs> {
 
   // #region background
 
+  /**
+   * 更新背景。
+   * @returns
+   */
   updateBackground() {
     this.background.update()
     return this
   }
 
+  /**
+   * 绘制背景。其中，options参数是一个可选的配置对象，用于设置背景的绘制样式。onGraph参数是一个布尔值，指示是否在图形上绘制背景。如果存在滚动插件并且背景选项为空或者onGraph为假，则会使用滚动插件的drawBackground方法绘制背景，否则使用默认的绘制方法。
+   * @param options
+   * @param onGraph
+   * @returns
+   */
   drawBackground(options?: Background.Options, onGraph?: boolean) {
     const scroller = this.getPlugin<any>('scroller')
     if (scroller != null && (this.options.background == null || !onGraph)) {
@@ -1093,6 +1496,11 @@ export class Graph extends Basecoat<EventArgs> {
     return this
   }
 
+  /**
+   * 清除背景。onGraph参数是一个布尔值，指示是否在图形上清除背景。如果存在滚动插件并且背景选项为空或者onGraph为假，则会使用滚动插件的clearBackground方法清除背景，否则使用默认的清除方法。
+   * @param onGraph
+   * @returns
+   */
   clearBackground(onGraph?: boolean) {
     const scroller = this.getPlugin<any>('scroller')
     if (scroller != null && (this.options.background == null || !onGraph)) {
@@ -1107,11 +1515,19 @@ export class Graph extends Basecoat<EventArgs> {
 
   // #region virtual-render
 
+  /**
+   * 启用虚拟渲染。
+   * @returns
+   */
   enableVirtualRender() {
     this.virtualRender.enableVirtualRender()
     return this
   }
 
+  /**
+   * 禁用虚拟渲染。
+   * @returns
+   */
   disableVirtualRender() {
     this.virtualRender.disableVirtualRender()
     return this
@@ -1121,20 +1537,37 @@ export class Graph extends Basecoat<EventArgs> {
 
   // #region mousewheel
 
+  /**
+   * 判断鼠标滚轮是否启用。
+   * @returns
+   */
   isMouseWheelEnabled() {
     return !this.mousewheel.disabled
   }
 
+  /**
+   * 启用鼠标滚轮。
+   * @returns
+   */
   enableMouseWheel() {
     this.mousewheel.enable()
     return this
   }
 
+  /**
+   * 禁用鼠标滚轮。
+   * @returns
+   */
   disableMouseWheel() {
     this.mousewheel.disable()
     return this
   }
 
+  /**
+   * 切换鼠标滚轮的启用状态。如果未提供enabled参数，则根据当前状态进行切换；如果提供了enabled参数，根据参数值来设置鼠标滚轮的启用状态。
+   * @param enabled
+   * @returns
+   */
   toggleMouseWheel(enabled?: boolean) {
     if (enabled == null) {
       if (this.isMouseWheelEnabled()) {
@@ -1154,6 +1587,10 @@ export class Graph extends Basecoat<EventArgs> {
 
   // #region panning
 
+  /**
+   * 判断是否可平移。如果存在滚动插件，则调用滚动插件的isPannable方法；否则，调用默认的pannable属性。
+   * @returns
+   */
   isPannable() {
     const scroller = this.getPlugin<any>('scroller')
     if (scroller) {
@@ -1162,6 +1599,10 @@ export class Graph extends Basecoat<EventArgs> {
     return this.panning.pannable
   }
 
+  /**
+   * 启用平移。如果存在滚动插件，则调用滚动插件的enablePanning方法；否则，调用默认的enablePanning方法。
+   * @returns
+   */
   enablePanning() {
     const scroller = this.getPlugin<any>('scroller')
     if (scroller) {
@@ -1173,6 +1614,10 @@ export class Graph extends Basecoat<EventArgs> {
     return this
   }
 
+  /**
+   * 禁用平移。如果存在滚动插件，则调用滚动插件的disablePanning方法；否则，调用默认的disablePanning方法。
+   * @returns
+   */
   disablePanning() {
     const scroller = this.getPlugin<any>('scroller')
     if (scroller) {
@@ -1183,6 +1628,11 @@ export class Graph extends Basecoat<EventArgs> {
     return this
   }
 
+  /**
+   * 切换平移的启用状态。如果未提供pannable参数，则根据当前状态进行切换；如果提供了pannable参数，根据参数值来设置平移的启用状态。
+   * @param pannable
+   * @returns
+   */
   togglePanning(pannable?: boolean) {
     if (pannable == null) {
       if (this.isPannable()) {
@@ -1205,6 +1655,12 @@ export class Graph extends Basecoat<EventArgs> {
 
   // #region plugin
 
+  /**
+   * 用某个图形插件。如果插件尚未安装，则将其添加到已安装的插件列表中，并调用插件的init方法进行初始化。
+   * @param plugin
+   * @param options
+   * @returns
+   */
   use(plugin: Graph.Plugin, ...options: any[]) {
     if (!this.installedPlugins.has(plugin)) {
       this.installedPlugins.add(plugin)
@@ -1213,18 +1669,33 @@ export class Graph extends Basecoat<EventArgs> {
     return this
   }
 
+  /**
+   * 获取指定名称的图形插件对象。
+   * @param pluginName
+   * @returns
+   */
   getPlugin<T extends Graph.Plugin>(pluginName: string): T | undefined {
     return Array.from(this.installedPlugins).find(
       (plugin) => plugin.name === pluginName,
     ) as T
   }
 
+  /**
+   * 获取指定名称数组的图形插件对象数组。
+   * @param pluginName
+   * @returns
+   */
   getPlugins<T extends Graph.Plugin[]>(pluginName: string[]): T | undefined {
     return Array.from(this.installedPlugins).filter((plugin) =>
       pluginName.includes(plugin.name),
     ) as T
   }
 
+  /**
+   * 启用指定名称或名称数组的图形插件。
+   * @param plugins
+   * @returns
+   */
   enablePlugins(plugins: string[] | string) {
     let postPlugins = plugins
     if (!Array.isArray(postPlugins)) {
@@ -1237,6 +1708,11 @@ export class Graph extends Basecoat<EventArgs> {
     return this
   }
 
+  /**
+   * 禁用指定名称或名称数组的图形插件。
+   * @param plugins
+   * @returns
+   */
   disablePlugins(plugins: string[] | string) {
     let postPlugins = plugins
     if (!Array.isArray(postPlugins)) {
@@ -1249,11 +1725,21 @@ export class Graph extends Basecoat<EventArgs> {
     return this
   }
 
+  /**
+   * 判断指定名称的图形插件是否启用。
+   * @param pluginName
+   * @returns
+   */
   isPluginEnabled(pluginName: string) {
     const pluginIns = this.getPlugin(pluginName)
     return pluginIns?.isEnabled?.()
   }
 
+  /**
+   * 销毁指定名称或名称数组的图形插件。
+   * @param plugins
+   * @returns
+   */
   disposePlugins(plugins: string[] | string) {
     let postPlugins = plugins
     if (!Array.isArray(postPlugins)) {
@@ -1270,6 +1756,9 @@ export class Graph extends Basecoat<EventArgs> {
 
   // #region dispose
 
+  /**
+   * 定义了一个dispose方法，用于销毁图形对象及其相关的资源
+   */
   @Basecoat.dispose()
   dispose() {
     this.clearCells()
@@ -1295,6 +1784,9 @@ export class Graph extends Basecoat<EventArgs> {
   // #endregion
 }
 
+/**
+ * 命名空间别名，用于简化使用
+ */
 export namespace Graph {
   /* eslint-disable @typescript-eslint/no-unused-vars */
   export import View = GraphView
@@ -1308,13 +1800,24 @@ export namespace Graph {
   export import BackgroundManager = Background
 }
 
+/**
+ * Graph.Options接口定义了图形库的选项。
+ */
 export namespace Graph {
   export interface Options extends GraphOptions.Manual {}
 }
 
+/**
+ * Graph.toStringTag定义了图形库的标签。
+ */
 export namespace Graph {
   export const toStringTag = `X6.${Graph.name}`
 
+  /**
+   * Graph.isGraph函数用于判断一个对象是否为Graph类的实例。
+   * @param instance
+   * @returns
+   */
   export function isGraph(instance: any): instance is Graph {
     if (instance == null) {
       return false
@@ -1334,6 +1837,9 @@ export namespace Graph {
   }
 }
 
+/**
+ * Graph.render函数用于创建一个Graph实例并渲染到指定的容器。
+ */
 export namespace Graph {
   export function render(
     options: Partial<Options>,
@@ -1360,6 +1866,9 @@ export namespace Graph {
   }
 }
 
+/**
+ * Graph.registerNode、Graph.registerEdge等函数用于注册节点、边、视图和其他自定义组件。
+ */
 export namespace Graph {
   export const registerNode = Node.registry.register
   export const registerEdge = Edge.registry.register
@@ -1383,6 +1892,9 @@ export namespace Graph {
     Registry.ConnectionPoint.registry.register
 }
 
+/**
+ * Graph.unregisterNode、Graph.unregisterEdge等函数用于注销已注册的组件。
+ */
 export namespace Graph {
   export const unregisterNode = Node.registry.unregister
   export const unregisterEdge = Edge.registry.unregister
@@ -1406,6 +1918,9 @@ export namespace Graph {
     Registry.ConnectionPoint.registry.unregister
 }
 
+/**
+ * Graph.Plugin类型定义了图形插件的接口，包含了名称、初始化、销毁和启用/禁用的方法。
+ */
 export namespace Graph {
   export type Plugin = {
     name: string

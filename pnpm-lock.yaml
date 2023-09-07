@@ -242,7 +242,7 @@ importers:
       '@antv/x6-geometry': ^2.0.5
       utility-types: ^3.10.0
     dependencies:
-      '@antv/x6-common': link:../x6-common
+      '@antv/x6-common': registry.npmmirror.com/@antv/x6-common/2.0.14
       '@antv/x6-geometry': link:../x6-geometry
       utility-types: registry.npmmirror.com/utility-types/3.10.0
 
@@ -252,7 +252,7 @@ importers:
       '@antv/x6': ^2.x
     devDependencies:
       '@angular/core': registry.npmmirror.com/@angular/core/15.2.3
-      '@antv/x6': link:../x6
+      '@antv/x6': registry.npmmirror.com/@antv/x6/2.13.1
 
   packages/x6-common:
     specifiers:
@@ -303,25 +303,25 @@ importers:
     specifiers:
       '@antv/x6': ^2.x
     devDependencies:
-      '@antv/x6': link:../x6
+      '@antv/x6': registry.npmmirror.com/@antv/x6/2.13.1
 
   packages/x6-plugin-dnd:
     specifiers:
       '@antv/x6': ^2.x
     devDependencies:
-      '@antv/x6': link:../x6
+      '@antv/x6': registry.npmmirror.com/@antv/x6/2.13.1
 
   packages/x6-plugin-export:
     specifiers:
       '@antv/x6': ^2.x
     devDependencies:
-      '@antv/x6': link:../x6
+      '@antv/x6': registry.npmmirror.com/@antv/x6/2.13.1
 
   packages/x6-plugin-history:
     specifiers:
       '@antv/x6': ^2.x
     devDependencies:
-      '@antv/x6': link:../x6
+      '@antv/x6': registry.npmmirror.com/@antv/x6/2.13.1
 
   packages/x6-plugin-keyboard:
     specifiers:
@@ -331,46 +331,46 @@ importers:
     dependencies:
       mousetrap: registry.npmmirror.com/mousetrap/1.6.5
     devDependencies:
-      '@antv/x6': link:../x6
+      '@antv/x6': registry.npmmirror.com/@antv/x6/2.13.1
       '@types/mousetrap': registry.npmmirror.com/@types/mousetrap/1.6.11
 
   packages/x6-plugin-minimap:
     specifiers:
       '@antv/x6': ^2.x
     devDependencies:
-      '@antv/x6': link:../x6
+      '@antv/x6': registry.npmmirror.com/@antv/x6/2.13.1
 
   packages/x6-plugin-scroller:
     specifiers:
       '@antv/x6': ^2.x
     devDependencies:
-      '@antv/x6': link:../x6
+      '@antv/x6': registry.npmmirror.com/@antv/x6/2.13.1
 
   packages/x6-plugin-selection:
     specifiers:
       '@antv/x6': ^2.x
     devDependencies:
-      '@antv/x6': link:../x6
+      '@antv/x6': registry.npmmirror.com/@antv/x6/2.13.1
 
   packages/x6-plugin-snapline:
     specifiers:
       '@antv/x6': ^2.x
     devDependencies:
-      '@antv/x6': link:../x6
+      '@antv/x6': registry.npmmirror.com/@antv/x6/2.13.1
 
   packages/x6-plugin-stencil:
     specifiers:
       '@antv/x6': ^2.x
       '@antv/x6-plugin-dnd': ^2.0.x
     devDependencies:
-      '@antv/x6': link:../x6
-      '@antv/x6-plugin-dnd': link:../x6-plugin-dnd
+      '@antv/x6': registry.npmmirror.com/@antv/x6/2.13.1
+      '@antv/x6-plugin-dnd': registry.npmmirror.com/@antv/x6-plugin-dnd/2.0.6_@antv+x6@2.13.1
 
   packages/x6-plugin-transform:
     specifiers:
       '@antv/x6': ^2.x
     devDependencies:
-      '@antv/x6': link:../x6
+      '@antv/x6': registry.npmmirror.com/@antv/x6/2.13.1
 
   packages/x6-react-components:
     specifiers:
@@ -415,7 +415,7 @@ importers:
       react: ^18.0.0
       react-dom: ^18.0.0
     devDependencies:
-      '@antv/x6': link:../x6
+      '@antv/x6': registry.npmmirror.com/@antv/x6/2.13.1
       '@types/react': registry.npmmirror.com/@types/react/18.0.28
       '@types/react-dom': registry.npmmirror.com/@types/react-dom/18.0.11
       react: registry.npmmirror.com/react/18.2.0
@@ -427,9 +427,9 @@ importers:
       vue: ^3.0.0
       vue-demi: latest
     dependencies:
-      vue-demi: registry.npmmirror.com/vue-demi/0.13.11_vue@3.2.47
+      vue-demi: registry.npmmirror.com/vue-demi/0.14.6_vue@3.2.47
     devDependencies:
-      '@antv/x6': link:../x6
+      '@antv/x6': registry.npmmirror.com/@antv/x6/2.13.1
       vue: registry.npmmirror.com/vue/3.2.47
 
   sites/x6-sites:
@@ -464,17 +464,17 @@ importers:
       '@antv/dumi-theme-antv': registry.npmmirror.com/@antv/dumi-theme-antv/0.3.6_hh6dadpnnnqjhukvwyylxw5dly
       '@antv/hierarchy': registry.npmmirror.com/@antv/hierarchy/0.6.11
       '@antv/layout': registry.npmmirror.com/@antv/layout/0.3.17_dagre@0.8.5
-      '@antv/x6': link:../../packages/x6
+      '@antv/x6': registry.npmmirror.com/@antv/x6/2.13.1
       '@antv/x6-plugin-clipboard': link:../../packages/x6-plugin-clipboard
-      '@antv/x6-plugin-dnd': link:../../packages/x6-plugin-dnd
+      '@antv/x6-plugin-dnd': registry.npmmirror.com/@antv/x6-plugin-dnd/2.0.6_@antv+x6@2.13.1
       '@antv/x6-plugin-export': link:../../packages/x6-plugin-export
       '@antv/x6-plugin-history': link:../../packages/x6-plugin-history
       '@antv/x6-plugin-keyboard': link:../../packages/x6-plugin-keyboard
       '@antv/x6-plugin-minimap': link:../../packages/x6-plugin-minimap
-      '@antv/x6-plugin-scroller': link:../../packages/x6-plugin-scroller
+      '@antv/x6-plugin-scroller': registry.npmmirror.com/@antv/x6-plugin-scroller/2.0.10_@antv+x6@2.13.1
       '@antv/x6-plugin-selection': link:../../packages/x6-plugin-selection
       '@antv/x6-plugin-snapline': link:../../packages/x6-plugin-snapline
-      '@antv/x6-plugin-stencil': link:../../packages/x6-plugin-stencil
+      '@antv/x6-plugin-stencil': registry.npmmirror.com/@antv/x6-plugin-stencil/2.1.4_@antv+x6@2.13.1
       '@antv/x6-plugin-transform': link:../../packages/x6-plugin-transform
       '@antv/x6-react-components': link:../../packages/x6-react-components
       '@antv/x6-react-shape': link:../../packages/x6-react-shape
@@ -1273,6 +1273,91 @@ packages:
       csstype: registry.npmmirror.com/csstype/3.1.1
       tslib: registry.npmmirror.com/tslib/2.5.0
     dev: false
+
+  registry.npmmirror.com/@antv/x6-common/2.0.14:
+    resolution:
+      {
+        integrity: sha512-/8OmYV2hxUIwNKt/YurWhGmhbTBu95mZRcF5cwUVp0oR0SmOGNFqMT710w1uvLAfWmfdoq/oEcCuScW/L8mOLw==,
+        registry: https://registry.npm.taobao.org/,
+        tarball: https://registry.npmmirror.com/@antv/x6-common/-/x6-common-2.0.14.tgz,
+      }
+    name: '@antv/x6-common'
+    version: 2.0.14
+    dependencies:
+      lodash-es: registry.npmmirror.com/lodash-es/4.17.21
+      utility-types: registry.npmmirror.com/utility-types/3.10.0
+
+  registry.npmmirror.com/@antv/x6-geometry/2.0.5:
+    resolution:
+      {
+        integrity: sha512-MId6riEQkxphBpVeTcL4ZNXL4lScyvDEPLyIafvWMcWNTGK0jgkK7N20XSzqt8ltJb0mGUso5s56mrk8ysHu2A==,
+        registry: https://registry.npm.taobao.org/,
+        tarball: https://registry.npmmirror.com/@antv/x6-geometry/-/x6-geometry-2.0.5.tgz,
+      }
+    name: '@antv/x6-geometry'
+    version: 2.0.5
+
+  registry.npmmirror.com/@antv/x6-plugin-dnd/2.0.6_@antv+x6@2.13.1:
+    resolution:
+      {
+        integrity: sha512-HD0PgL27ZV+X1Q0gwQ0ltm67J5okvAdGndFv5p8Pp9bV5PKe8B2BzLF1CZwhBroz58xkXJVcGH0TT4NmrHjbRw==,
+        registry: https://registry.npm.taobao.org/,
+        tarball: https://registry.npmmirror.com/@antv/x6-plugin-dnd/-/x6-plugin-dnd-2.0.6.tgz,
+      }
+    id: registry.npmmirror.com/@antv/x6-plugin-dnd/2.0.6
+    name: '@antv/x6-plugin-dnd'
+    version: 2.0.6
+    peerDependencies:
+      '@antv/x6': ^2.x
+    dependencies:
+      '@antv/x6': registry.npmmirror.com/@antv/x6/2.13.1
+
+  registry.npmmirror.com/@antv/x6-plugin-scroller/2.0.10_@antv+x6@2.13.1:
+    resolution:
+      {
+        integrity: sha512-CrC5zCbtPe7LJEKK8ucLcDN+9lMtTJNApFmFObAiR/y2LO1QFCHz8GGLVeNOZaIEmJbR/Z/etpJkvc1LE7WhTg==,
+        registry: https://registry.npm.taobao.org/,
+        tarball: https://registry.npmmirror.com/@antv/x6-plugin-scroller/-/x6-plugin-scroller-2.0.10.tgz,
+      }
+    id: registry.npmmirror.com/@antv/x6-plugin-scroller/2.0.10
+    name: '@antv/x6-plugin-scroller'
+    version: 2.0.10
+    peerDependencies:
+      '@antv/x6': ^2.x
+    dependencies:
+      '@antv/x6': registry.npmmirror.com/@antv/x6/2.13.1
+    dev: false
+
+  registry.npmmirror.com/@antv/x6-plugin-stencil/2.1.4_@antv+x6@2.13.1:
+    resolution:
+      {
+        integrity: sha512-/hCrf7h7Vg3Gb9X1ent5cg3sMTUaJoZWQC9NUp9S0KLTtDgYn0KMajZJLNpKPTyK8mNnEjffWZ/skcZBQd1NwA==,
+        registry: https://registry.npm.taobao.org/,
+        tarball: https://registry.npmmirror.com/@antv/x6-plugin-stencil/-/x6-plugin-stencil-2.1.4.tgz,
+      }
+    id: registry.npmmirror.com/@antv/x6-plugin-stencil/2.1.4
+    name: '@antv/x6-plugin-stencil'
+    version: 2.1.4
+    peerDependencies:
+      '@antv/x6': ^2.x
+    dependencies:
+      '@antv/x6': registry.npmmirror.com/@antv/x6/2.13.1
+      '@antv/x6-plugin-dnd': registry.npmmirror.com/@antv/x6-plugin-dnd/2.0.6_@antv+x6@2.13.1
+    dev: false
+
+  registry.npmmirror.com/@antv/x6/2.13.1:
+    resolution:
+      {
+        integrity: sha512-aAj3SlOi4KhBhpoiX4WCsJ61glztSmZy6Vb0aWZTFZXErfp1sUjTmrThJeTG6IQZbXW+7GcGjFGI04roOa05Bg==,
+        registry: https://registry.npm.taobao.org/,
+        tarball: https://registry.npmmirror.com/@antv/x6/-/x6-2.13.1.tgz,
+      }
+    name: '@antv/x6'
+    version: 2.13.1
+    dependencies:
+      '@antv/x6-common': registry.npmmirror.com/@antv/x6-common/2.0.14
+      '@antv/x6-geometry': registry.npmmirror.com/@antv/x6-geometry/2.0.5
+      utility-types: registry.npmmirror.com/utility-types/3.10.0
 
   registry.npmmirror.com/@babel/code-frame/7.0.0:
     resolution:
@@ -14682,7 +14767,7 @@ packages:
     name: axios
     version: 0.21.4
     dependencies:
-      follow-redirects: registry.npmmirror.com/follow-redirects/1.15.2_debug@3.2.7
+      follow-redirects: registry.npmmirror.com/follow-redirects/1.15.2
     transitivePeerDependencies:
       - debug
     dev: true
@@ -16451,7 +16536,7 @@ packages:
       mississippi: registry.npmmirror.com/mississippi/2.0.0
       mkdirp: registry.npmmirror.com/mkdirp/0.5.6
       move-concurrently: registry.npmmirror.com/move-concurrently/1.0.1
-      promise-inflight: registry.npmmirror.com/promise-inflight/1.0.1_bluebird@3.7.2
+      promise-inflight: registry.npmmirror.com/promise-inflight/1.0.1
       rimraf: registry.npmmirror.com/rimraf/2.6.3
       ssri: registry.npmmirror.com/ssri/5.3.0
       unique-filename: registry.npmmirror.com/unique-filename/1.1.1
@@ -16476,7 +16561,7 @@ packages:
       mississippi: registry.npmmirror.com/mississippi/3.0.0
       mkdirp: registry.npmmirror.com/mkdirp/0.5.6
       move-concurrently: registry.npmmirror.com/move-concurrently/1.0.1
-      promise-inflight: registry.npmmirror.com/promise-inflight/1.0.1_bluebird@3.7.2
+      promise-inflight: registry.npmmirror.com/promise-inflight/1.0.1
       rimraf: registry.npmmirror.com/rimraf/2.6.3
       ssri: registry.npmmirror.com/ssri/6.0.2
       unique-filename: registry.npmmirror.com/unique-filename/1.1.1
@@ -16561,7 +16646,7 @@ packages:
       mississippi: registry.npmmirror.com/mississippi/1.3.1
       mkdirp: registry.npmmirror.com/mkdirp/0.5.6
       move-concurrently: registry.npmmirror.com/move-concurrently/1.0.1
-      promise-inflight: registry.npmmirror.com/promise-inflight/1.0.1_bluebird@3.7.2
+      promise-inflight: registry.npmmirror.com/promise-inflight/1.0.1
       rimraf: registry.npmmirror.com/rimraf/2.6.3
       ssri: registry.npmmirror.com/ssri/4.1.6
       unique-filename: registry.npmmirror.com/unique-filename/1.1.1
@@ -26097,27 +26182,6 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
-    dev: false
-
-  registry.npmmirror.com/follow-redirects/1.15.2_debug@3.2.7:
-    resolution:
-      {
-        integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==,
-        registry: https://registry.npm.taobao.org/,
-        tarball: https://registry.npmmirror.com/follow-redirects/-/follow-redirects-1.15.2.tgz,
-      }
-    id: registry.npmmirror.com/follow-redirects/1.15.2
-    name: follow-redirects
-    version: 1.15.2
-    engines: { node: '>=4.0' }
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
-    dependencies:
-      debug: registry.npmmirror.com/debug/3.2.7
-    dev: true
 
   registry.npmmirror.com/follow-redirects/1.15.2_debug@4.1.1:
     resolution:
@@ -26732,7 +26796,7 @@ packages:
     version: 1.2.13
     engines: { node: '>= 4.0' }
     os: [darwin]
-    deprecated: fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents 2.
+    deprecated: The v1 package contains DANGEROUS / INSECURE binaries. Upgrade to safe fsevents v2
     requiresBuild: true
     dependencies:
       bindings: registry.npmmirror.com/bindings/1.5.0
@@ -34991,7 +35055,6 @@ packages:
       }
     name: lodash-es
     version: 4.17.21
-    dev: false
 
   registry.npmmirror.com/lodash._reinterpolate/3.0.0:
     resolution:
@@ -40224,7 +40287,7 @@ packages:
       npm-package-arg: registry.npmmirror.com/npm-package-arg/5.1.2
       npm-pick-manifest: registry.npmmirror.com/npm-pick-manifest/1.0.4
       osenv: registry.npmmirror.com/osenv/0.1.5
-      promise-inflight: registry.npmmirror.com/promise-inflight/1.0.1_bluebird@3.7.2
+      promise-inflight: registry.npmmirror.com/promise-inflight/1.0.1
       promise-retry: registry.npmmirror.com/promise-retry/1.1.1
       protoduck: registry.npmmirror.com/protoduck/4.0.0
       safe-buffer: registry.npmmirror.com/safe-buffer/5.2.1
@@ -44511,7 +44574,6 @@ packages:
     peerDependenciesMeta:
       bluebird:
         optional: true
-    dev: false
 
   registry.npmmirror.com/promise-inflight/1.0.1_bluebird@3.7.2:
     resolution:
@@ -44530,6 +44592,7 @@ packages:
         optional: true
     dependencies:
       bluebird: registry.npmmirror.com/bluebird/3.7.2
+    dev: true
 
   registry.npmmirror.com/promise-retry/1.1.1:
     resolution:
@@ -59451,7 +59514,6 @@ packages:
     name: utility-types
     version: 3.10.0
     engines: { node: '>= 4' }
-    dev: false
 
   registry.npmmirror.com/utils-merge/1.0.1:
     resolution:
@@ -59850,16 +59912,16 @@ packages:
     engines: { node: '>=0.10.0' }
     dev: false
 
-  registry.npmmirror.com/vue-demi/0.13.11_vue@3.2.47:
+  registry.npmmirror.com/vue-demi/0.14.6_vue@3.2.47:
     resolution:
       {
-        integrity: sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==,
+        integrity: sha512-8QA7wrYSHKaYgUxDA5ZC24w+eHm3sYCbp0EzcDwKqN3p6HqtTCGR/GVsPyZW92unff4UlcSh++lmqDWN3ZIq4w==,
         registry: https://registry.npm.taobao.org/,
-        tarball: https://registry.npmmirror.com/vue-demi/-/vue-demi-0.13.11.tgz,
+        tarball: https://registry.npmmirror.com/vue-demi/-/vue-demi-0.14.6.tgz,
       }
-    id: registry.npmmirror.com/vue-demi/0.13.11
+    id: registry.npmmirror.com/vue-demi/0.14.6
     name: vue-demi
-    version: 0.13.11
+    version: 0.14.6
     engines: { node: '>=12' }
     hasBin: true
     requiresBuild: true
