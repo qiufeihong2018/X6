@@ -79,13 +79,19 @@ export default class Example extends React.Component {
   onCopy = () => {
     const cells = this.selection.getSelectedCells()
     if (cells && cells.length) {
-      this.clipboard.copy(cells)
+      this.clipboard.copy(cells, {
+        useLocalStorage: true,
+        localStorageKey: 'dawei',
+      })
     }
   }
 
   onPaste = () => {
     if (!this.clipboard.isEmpty()) {
-      this.clipboard.paste()
+      this.clipboard.paste({
+        localStorageKey: 'dawei',
+        useLocalStorage: true,
+      })
     }
   }
 

@@ -76,13 +76,13 @@ export class ClipboardImpl {
 
   serialize(options: ClipboardImpl.PasteOptions) {
     if (options.useLocalStorage !== false) {
-      Storage.save(this.cells)
+      Storage.save(this.cells, options.localStorageKey)
     }
   }
 
   deserialize(options: ClipboardImpl.PasteOptions) {
     if (options.useLocalStorage) {
-      const cells = Storage.fetch()
+      const cells = Storage.fetch(options.localStorageKey)
       if (cells) {
         this.cells = cells
       }
@@ -108,6 +108,7 @@ export class ClipboardImpl {
 export namespace ClipboardImpl {
   export interface Options {
     useLocalStorage?: boolean
+    localStorageKey?: string
   }
 
   export interface CopyOptions extends Options {
@@ -138,16 +139,21 @@ export namespace ClipboardImpl {
 namespace Storage {
   const LOCAL_STORAGE_KEY = `${Config.prefixCls}.clipboard.cells`
 
-  export function save(cells: Cell[]) {
+  export function save(cells: Cell[], localStorageKey?: string) {
     if (window.localStorage) {
       const data = cells.map((cell) => cell.toJSON())
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data))
+      localStorage.setItem(
+        `${localStorageKey}.${LOCAL_STORAGE_KEY}`,
+        JSON.stringify(data),
+      )
     }
   }
 
-  export function fetch() {
+  export function fetch(localStorageKey?: string) {
     if (window.localStorage) {
-      const raw = localStorage.getItem(LOCAL_STORAGE_KEY)
+      const raw = localStorage.getItem(
+        `${localStorageKey}.${LOCAL_STORAGE_KEY}`,
+      )
       const cells = raw ? JSON.parse(raw) : []
       if (cells) {
         return Model.fromJSON(cells)

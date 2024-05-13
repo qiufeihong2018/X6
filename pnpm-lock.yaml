@@ -1613,7 +1613,6 @@ packages:
       source-map: 0.5.7
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@babel/eslint-parser@7.19.1(@babel/core@7.21.0)(eslint@8.36.0):
     resolution:
@@ -2658,6 +2657,19 @@ packages:
     dependencies:
       '@babel/core': 7.21.3
       '@babel/helper-plugin-utils': 7.20.2
+    dev: false
+
+  /@babel/plugin-syntax-flow@7.18.6(@babel/core@7.4.5):
+    resolution:
+      {
+        integrity: sha512-LUbR+KNTBWCUAqRG9ex5Gnzu2IOkt8jRJbHHXFT9q+L9zm7M/QQbEqXyw1n1pohYvOyWC8CjeyjrSaIwiYjK7A==,
+      }
+    engines: { node: '>=6.9.0' }
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/core': 7.4.5
+      '@babel/helper-plugin-utils': 7.20.2
 
   /@babel/plugin-syntax-function-bind@7.18.6(@babel/core@7.4.5):
     resolution:
@@ -2742,7 +2754,6 @@ packages:
     dependencies:
       '@babel/core': 7.4.5
       '@babel/helper-plugin-utils': 7.20.2
-    dev: true
 
   /@babel/plugin-syntax-logical-assignment-operators@7.10.4(@babel/core@7.21.3):
     resolution:
@@ -3719,7 +3730,6 @@ packages:
       '@babel/helper-plugin-utils': 7.20.2
       '@babel/plugin-syntax-jsx': 7.18.6(@babel/core@7.4.5)
       '@babel/types': 7.21.3
-    dev: true
 
   /@babel/plugin-transform-react-pure-annotations@7.18.6(@babel/core@7.21.3):
     resolution:
@@ -18852,8 +18862,8 @@ packages:
       '@babel/plugin-transform-react-jsx': ^7.14.9
       eslint: ^8.1.0
     dependencies:
-      '@babel/plugin-syntax-flow': 7.18.6(@babel/core@7.21.3)
-      '@babel/plugin-transform-react-jsx': 7.21.0(@babel/core@7.21.3)
+      '@babel/plugin-syntax-flow': 7.18.6(@babel/core@7.4.5)
+      '@babel/plugin-transform-react-jsx': 7.21.0(@babel/core@7.4.5)
       eslint: 8.36.0
       lodash: 4.17.21
       string-natural-compare: 3.0.1
